@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIDI Generator by Mind Music</title>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>MIDI Generator by Mind Music</h1>
+    <form id="midi-form">
+        <label for="scale">Escala (notas separadas por vírgula):</label><br>
+        <input type="text" id="scale" name="scale" placeholder="ex: G#4,A4,B#4,C#5,D#5,E5,F#5"><br><br>
+
+        <label for="bpm">BPM:</label><br>
+        <input type="number" id="bpm" name="bpm" value="148"><br><br>
+        
+        <label for="note_quantity">Quantidade de Notas:</label><br>
+        <input type="number" id="note_quantity" name="note_quantity" value="32"><br><br>
+        
+        <label for="note-style">Estilo de Notas:</label><br>
+        <select id="note-style" name="note-style">
+            <option value="arp">Arp</option>
+            <option value="curtas">Curtas</option>
+            <option value="medias">Medias</option>
+            <option value="longas">Longas</option>
+            <option value="mistas">Mistas</option>
+        </select><br><br>
+
+        <input type="submit" value="Gerar MIDI">
+        <a id="download-link" style="display:none;">Baixar MIDI</a>
+    </form>
+
+
+    <img src="favicon.png" alt="Ícone" id="page-icon">
+    
+    <script src="https://cdn.jsdelivr.net/npm/midi-writer-js@3.1.1/browser/midiwriter.min.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
