@@ -3,15 +3,17 @@ document.getElementById('midi-form').addEventListener('submit', function(event) 
 
     // Captura os valores do formulário
     const scaleInput = document.getElementById('scale').value;
+    const octavesInput = document.getElementById('octaves').value;
     const bpm = parseInt(document.getElementById('bpm').value, 10);
     const noteQuantity = parseInt(document.getElementById('note_quantity').value, 10);
     const noteStyle = document.getElementById('note-style').value;
 
     // Converte a string de notas em um array
     const scale = scaleInput.split(',').map(note => note.trim());
-
+    const octaves = octavesInput.split(',').map(note => note.trim());
+    const notes_to_use = create_notes(scale,octaves)
     // Cria o MIDI
-    const midi = createMidi(scale, bpm, noteStyle, noteQuantity);
+    const midi = createMidi(notes_to_use, bpm, noteStyle, noteQuantity);
 
     // Gera um Blob com o conteúdo MIDI
     const blob = new Blob([midi], { type: 'audio/midi' });
@@ -25,7 +27,15 @@ document.getElementById('midi-form').addEventListener('submit', function(event) 
     downloadLink.click();
     document.body.removeChild(downloadLink);
 });
-
+function create_notes(scale, octaves){
+    let notes = []
+    octaves.forEach(octave => {
+        scale.forEach(note => {
+            notes.push(note+octave)
+        })
+    })
+    return notes
+}
 function createMidi(scale, bpm, style, noteQuantity) {
     const track = new MidiWriter.Track();
     track.setTempo(bpm);
@@ -58,6 +68,8 @@ function createMidi(scale, bpm, style, noteQuantity) {
     melody.forEach(item => {
         track.addEvent(new MidiWriter.NoteEvent({ pitch: [item.note], duration: item.duration }));
     });
+
+    console.log(melody);  // Debug statement to check the generated notes and durations
 
     // Create a write instance and return the track data
     const writer = new MidiWriter.Writer(track);
